@@ -1,20 +1,20 @@
-# Usa la imagen oficial de Node.js como base
-FROM node:16-alpine
+# Usa una imagen base oficial de Node.js
+FROM node:16
 
-# Instala dependencias del sistema
-RUN apk add --no-cache bash git
-
-# Crea y establece el directorio de trabajo
+# Configura el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Clona Botpress desde el repositorio oficial
-RUN git clone https://github.com/botpress/botpress.git .
+# Copia los archivos del proyecto al contenedor
+COPY . .
 
-# Instala dependencias de Node.js
+# Instalar la versión más reciente de npm
+RUN npm install -g npm@latest
+
+# Instalar las dependencias de Node.js
 RUN npm install
 
-# Expone el puerto 3000, que es el predeterminado de Botpress
+# Exponer el puerto de Botpress
 EXPOSE 3000
 
-# Inicia la aplicación Botpress
+# Comando para iniciar Botpress
 CMD ["npm", "start"]
